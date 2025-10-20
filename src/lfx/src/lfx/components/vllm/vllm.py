@@ -69,23 +69,26 @@ class VllmComponent(LCModelComponent):
         IntInput(
             name="seed",
             display_name="Seed",
-            info="The seed controls the reproducibility of the job.",
+            info="Controls the reproducibility of the job. Set to -1 to disable (some providers may not support).",
             advanced=True,
-            value=1,
+            value=-1,
+            required=False,
         ),
         IntInput(
             name="max_retries",
             display_name="Max Retries",
-            info="The maximum number of retries to make when generating.",
+            info="Max retries when generating. Set to -1 to disable (some providers may not support).",
             advanced=True,
-            value=5,
+            value=-1,
+            required=False,
         ),
         IntInput(
             name="timeout",
             display_name="Timeout",
-            info="The timeout for requests to vLLM completion API.",
+            info="Timeout for requests to vLLM completion API. Set to -1 to disable (some providers may not support).",
             advanced=True,
-            value=700,
+            value=-1,
+            required=False,
         ),
     ]
 
@@ -97,11 +100,16 @@ class VllmComponent(LCModelComponent):
             "max_tokens": self.max_tokens or None,
             "model_kwargs": self.model_kwargs or {},
             "base_url": self.api_base or "http://localhost:8000/v1",
-            "max_retries": self.max_retries,
-            "timeout": self.timeout,
             "temperature": self.temperature if self.temperature is not None else 0.1,
-            "seed": self.seed,
         }
+
+        # Only add optional parameters if explicitly set (not -1)
+        if self.seed is not None and self.seed != -1:
+            parameters["seed"] = self.seed
+        if self.timeout is not None and self.timeout != -1:
+            parameters["timeout"] = self.timeout
+        if self.max_retries is not None and self.max_retries != -1:
+            parameters["max_retries"] = self.max_retries
 
         output = ChatOpenAI(**parameters)
         if self.json_mode:
