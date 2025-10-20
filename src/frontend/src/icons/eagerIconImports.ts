@@ -107,6 +107,7 @@ import { UpstashSvgIcon } from "@/icons/Upstash";
 import { VectaraIcon } from "@/icons/VectaraIcon";
 import { VertexAIIcon } from "@/icons/VertexAI";
 import { VLMRunIcon } from "@/icons/VLMRun";
+import { VLLMIcon } from "@/icons/vLLM";
 import { WeaviateIcon } from "@/icons/Weaviate";
 import { WikipediaIcon } from "@/icons/Wikipedia";
 import { WolframIcon } from "@/icons/Wolfram";
@@ -117,6 +118,7 @@ import { JigsawStackIcon } from "./JigsawStack";
 import { WindsurfIcon } from "./Windsurf";
 
 // Export the eagerly loaded icons map
+// Updated to include vLLM icon
 export const eagerIconsMapping = {
   AIML: AIMLIcon,
   AgentQL: AgentQLIcon,
@@ -227,6 +229,7 @@ export const eagerIconsMapping = {
   Upstash: UpstashSvgIcon,
   Vectara: VectaraIcon,
   VertexAI: VertexAIIcon,
+  vLLM: VLLMIcon,
   WatsonxAI: WatsonxAiIcon,
   Weaviate: WeaviateIcon,
   Wikipedia: WikipediaIcon,
