@@ -23,7 +23,7 @@ def __getattr__(attr_name: str) -> Any:
         raise AttributeError(msg)
     try:
         result = import_mod(attr_name, _dynamic_imports[attr_name], __spec__.parent)
-    except (ModuleNotFoundError, ImportError, AttributeError) as e:
+    except (ImportError, AttributeError) as e:
         msg = f"Could not import '{attr_name}' from '{__name__}': {e}"
         raise AttributeError(msg) from e
     globals()[attr_name] = result
