@@ -40,8 +40,22 @@ For more information, see [Language model components](/components-models).
 | seed | Integer | Input parameter. The seed controls the reproducibility of the job. Default: 1. |
 | max_retries | Integer | Input parameter. The maximum number of retries to make when generating. Default: 5. |
 | timeout | Integer | Input parameter. The timeout for requests to vLLM completion API. Default: 700. |
-| model_kwargs | Dict | Input parameter. Additional keyword arguments to pass to the model. |
+| model_kwargs | Dict | Input parameter. Additional keyword arguments to pass to the model. Note: `stream_options` is disabled by default for compatibility with vLLM/Gemini. |
 | json_mode | Boolean | Input parameter. If True, it will output JSON regardless of passing a schema. |
+
+## Compatibility Notes
+
+The vLLM component automatically disables `stream_options` by default to ensure compatibility with different vLLM deployments and providers like Google Gemini. This prevents errors such as "Unknown name 'continuous_usage_stats'" that can occur when using OpenAI-compatible APIs that don't support all streaming options.
+
+If you need to enable `stream_options` for your specific vLLM deployment, you can override this behavior using the `model_kwargs` parameter:
+
+```json
+{
+  "stream_options": {
+    "stream_include_usage": true
+  }
+}
+```
 
 ## Setting up vLLM
 
