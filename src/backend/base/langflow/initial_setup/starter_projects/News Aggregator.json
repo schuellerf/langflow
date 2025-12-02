@@ -889,7 +889,7 @@
                   },
                   {
                     "name": "fastapi",
-                    "version": "0.123.0"
+                    "version": "0.128.0"
                   },
                   {
                     "name": "lfx",
@@ -1180,7 +1180,7 @@
                 "dependencies": [
                   {
                     "name": "langchain_core",
-                    "version": "0.3.80"
+                    "version": "0.3.83"
                   },
                   {
                     "name": "pydantic",
@@ -1938,7 +1938,7 @@
                   },
                   {
                     "name": "fastapi",
-                    "version": "0.123.0"
+                    "version": "0.128.0"
                   },
                   {
                     "name": "lfx",
@@ -1954,7 +1954,7 @@
                   },
                   {
                     "name": "google",
-                    "version": "0.8.5"
+                    "version": "2.47.0"
                   },
                   {
                     "name": "googleapiclient",

@@ -366,7 +366,7 @@
                   },
                   {
                     "name": "langchain_community",
-                    "version": "0.3.21"
+                    "version": "0.3.31"
                   },
                   {
                     "name": "lfx",
@@ -770,7 +770,7 @@
                   },
                   {
                     "name": "langchain_cohere",
-                    "version": "0.3.5"
+                    "version": "0.4.6"
                   }
                 ],
                 "total_dependencies": 8

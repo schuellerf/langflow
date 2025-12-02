@@ -486,7 +486,7 @@
                   },
                   {
                     "name": "fastapi",
-                    "version": "0.123.0"
+                    "version": "0.128.0"
                   },
                   {
                     "name": "lfx",
@@ -986,7 +986,7 @@
                   },
                   {
                     "name": "langchain_community",
-                    "version": "0.3.21"
+                    "version": "0.3.31"
                   },
                   {
                     "name": "lfx",

@@ -185,6 +185,7 @@ class LCAgentComponent(Component):
         if "input" not in input_dict:
             input_dict = {"input": self.input_value}
 
+        # input_dict: dict[str, str | list[BaseMessage]] = {}
         if hasattr(self, "system_prompt") and self.system_prompt and self.system_prompt.strip():
             input_dict["system_prompt"] = self.system_prompt
 

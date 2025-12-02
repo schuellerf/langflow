@@ -520,7 +520,7 @@
                   },
                   {
                     "name": "fastapi",
-                    "version": "0.123.0"
+                    "version": "0.128.0"
                   },
                   {
                     "name": "lfx",
@@ -815,7 +815,7 @@
                 "dependencies": [
                   {
                     "name": "langchain_core",
-                    "version": "0.3.80"
+                    "version": "0.3.83"
                   },
                   {
                     "name": "pydantic",
@@ -1891,7 +1891,7 @@
                   },
                   {
                     "name": "ibm_watsonx_ai",
-                    "version": "1.4.7"
+                    "version": "1.5.0"
                   },
                   {
                     "name": "langchain_openai",
@@ -1907,7 +1907,7 @@
                   },
                   {
                     "name": "langchain_community",
-                    "version": "0.3.21"
+                    "version": "0.3.31"
                   },
                   {
                     "name": "langchain_ibm",
@@ -2347,7 +2347,7 @@
                 "dependencies": [
                   {
                     "name": "langchain_community",
-                    "version": "0.3.21"
+                    "version": "0.3.31"
                   },
                   {
                     "name": "lfx",
@@ -2696,7 +2696,7 @@
                 "dependencies": [
                   {
                     "name": "langchain_core",
-                    "version": "0.3.80"
+                    "version": "0.3.83"
                   },
                   {
                     "name": "lfx",
