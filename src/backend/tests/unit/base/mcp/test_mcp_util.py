@@ -1709,6 +1709,91 @@ class TestNormalizeArgumentsForMcp:
         result = util._normalize_arguments_for_mcp({"count": 1, "optional": None}, Schema, "test_tool")
         assert result == {"count": 1, "optional": None}
 
+    def test_str_to_list_when_optional_list_expected(self):
+        r"""Test str '["a"]' when list[str] | None expected -> ["a"]."""
+        from pydantic import BaseModel, Field
+
+        class Schema(BaseModel):
+            items: list[str] | None = Field(default=None, description="Items")
+
+        result = util._normalize_arguments_for_mcp({"items": '["a", "b"]'}, Schema, "test_tool")
+        assert result == {"items": ["a", "b"]}
+        assert isinstance(result["items"], list)
+
+    def test_str_to_dict_when_optional_dict_expected(self):
+        r"""Test str '{"x":1}' when dict | None expected -> {"x":1}."""
+        from pydantic import BaseModel, Field
+
+        class Schema(BaseModel):
+            params: dict | None = Field(default=None, description="Params")
+
+        result = util._normalize_arguments_for_mcp({"params": '{"x": 1}'}, Schema, "test_tool")
+        assert result == {"params": {"x": 1}}
+        assert isinstance(result["params"], dict)
+
+    def test_bool_rejected_when_int_expected(self):
+        """Test bool True/False when int expected -> raises ValueError."""
+        from pydantic import BaseModel, Field
+
+        class Schema(BaseModel):
+            count: int = Field(..., description="Count")
+
+        with pytest.raises(ValueError, match=r"expects integer.*bool"):
+            util._normalize_arguments_for_mcp({"count": True}, Schema, "test_tool")
+
+        with pytest.raises(ValueError, match=r"expects integer.*bool"):
+            util._normalize_arguments_for_mcp({"count": False}, Schema, "test_tool")
+
+    def test_extra_keys_preserved_for_pydantic_validation(self):
+        """Test extra keys not in schema are preserved so Pydantic can report them."""
+        from pydantic import BaseModel, Field
+
+        class Schema(BaseModel):
+            valid_field: int = Field(..., description="Valid")
+
+        result = util._normalize_arguments_for_mcp({"valid_field": 1, "typo_field": 2}, Schema, "test_tool")
+        assert result["valid_field"] == 1
+        assert result["typo_field"] == 2
+
+    def test_str_to_float_when_float_expected(self):
+        """Test str '3.14' when float expected -> 3.14."""
+        from pydantic import BaseModel, Field
+
+        class Schema(BaseModel):
+            value: float = Field(..., description="Value")
+
+        result = util._normalize_arguments_for_mcp({"value": "3.14"}, Schema, "test_tool")
+        assert result == {"value": 3.14}
+        assert isinstance(result["value"], float)
+
+    def test_invalid_json_for_dict_raises_clear_error(self):
+        """Test invalid JSON string when dict expected raises ValueError with tool and param name."""
+        from pydantic import BaseModel, Field
+
+        class Schema(BaseModel):
+            params: dict = Field(..., description="Params")
+
+        with pytest.raises(ValueError, match=r"expects object \(dict\)") as exc_info:
+            util._normalize_arguments_for_mcp({"params": "not valid json"}, Schema, "my_tool")
+
+        assert "my_tool" in str(exc_info.value)
+        assert "Parameter 'params'" in str(exc_info.value)
+        assert "invalid JSON" in str(exc_info.value)
+
+    def test_invalid_json_for_list_raises_clear_error(self):
+        """Test invalid JSON string when list expected raises ValueError with tool and param name."""
+        from pydantic import BaseModel, Field
+
+        class Schema(BaseModel):
+            items: list = Field(..., description="Items")
+
+        with pytest.raises(ValueError, match=r"expects array \(list\)") as exc_info:
+            util._normalize_arguments_for_mcp({"items": "{invalid"}, Schema, "list_tool")
+
+        assert "list_tool" in str(exc_info.value)
+        assert "Parameter 'items'" in str(exc_info.value)
+        assert "invalid JSON" in str(exc_info.value)
+
     def test_str_to_dict_when_nested_model_expected(self):
         """Test str JSON when nested Pydantic model expected -> parsed dict (foreman-mcp params case)."""
         from pydantic import BaseModel, Field
